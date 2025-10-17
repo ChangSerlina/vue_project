@@ -1,5 +1,6 @@
 <script setup>
-import Header from './components/Header.vue'
+import Header from './components/Header.vue';
+import Content from './components/Content.vue';
 </script>
 
 <template>
@@ -7,6 +8,6 @@ import Header from './components/Header.vue'
         <Header />
     </header>
     <main>
-        
+        <Content />
     </main>
 </template>

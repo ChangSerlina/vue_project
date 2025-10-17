@@ -1,15 +1,14 @@
 <template>
-    <div class="flex">
+    <div class="flex nav">
         <!-- 左邊LOGO -->
         <div class="col-2 logo">serlina</div>
 
         <!-- 大螢幕選單 -->
         <div class="col-8 menu" v-if="!isMobile">
             <ul class="tabs">
-                <li>Home</li>
-                <li>About Me</li>
-                <li>Projects</li>
-                <li>Contact Me</li>
+                <li v-for="tab in tabs" :key="tab" :class="{ active: activeTab === tab }" @click="activeTab = tab">
+                    {{ tab }}
+                </li>
             </ul>
         </div>
 
@@ -25,10 +24,9 @@
                 @click="toggleMenu" />
             <!-- 下拉選單 -->
             <ul v-if="showMenu" class="dropdown">
-                <li>Home</li>
-                <li>About Me</li>
-                <li>Projects</li>
-                <li>Contact Me</li>
+                <li v-for="tab in tabs" :key="tab" :class="{ active: activeTab === tab }" @click="activeTab = tab">
+                    {{ tab }}
+                </li>
                 <img src="https://img.icons8.com/?size=25&id=132&format=png&color=000000" alt="搜尋" />
                 <img src="https://img.icons8.com/?size=25&id=22396&format=png&color=000000" alt="使用者" />
             </ul>
@@ -41,6 +39,12 @@ import { ref, onMounted, onBeforeUnmount } from "vue";
 
 const isMobile = ref(window.innerWidth < 768);
 const showMenu = ref(false);
+
+// 頁籤列表
+const tabs = ["Home", "About Me", "Projects", "Contact Me"]
+
+// 當前 active 的頁籤，預設 Home
+const activeTab = ref("Home")
 
 const checkScreen = () => {
     isMobile.value = window.innerWidth < 768;
@@ -63,6 +67,9 @@ onBeforeUnmount(() => {
 <style>
 .flex {
     display: flex;
+}
+
+.nav {
     justify-content: space-between;
     align-items: center;
 }
@@ -74,6 +81,14 @@ onBeforeUnmount(() => {
     list-style: none;
     padding: 0;
     margin: 0;
+}
+
+.tabs li {
+    cursor: pointer;
+}
+
+.tabs li.active {
+    border-bottom: #007bff 2px solid;
 }
 
 .icon {
@@ -99,10 +114,11 @@ onBeforeUnmount(() => {
     }
 
     .dropdown {
+        z-index: 2;
         text-align: center;
         /* 讓裡面文字與圖片都置中 */
         position: absolute;
-        top: 60px;
+        top: 68px;
         /* header 高度 */
         left: 0;
         right: 0;
@@ -110,7 +126,7 @@ onBeforeUnmount(() => {
         list-style: none;
         margin: 0;
         padding: 10px 0;
-        border-top: 1px solid #ccc;
+        box-shadow: inset 0 -4px 0;
     }
 
     .dropdown li {
@@ -118,8 +134,8 @@ onBeforeUnmount(() => {
         text-align: center;
     }
 
-    .dropdown li:hover {
-        background: #f2f2f2;
+    .dropdown li.active {
+        background-color: #B6DBF2;
     }
 
     .dropdown img {
